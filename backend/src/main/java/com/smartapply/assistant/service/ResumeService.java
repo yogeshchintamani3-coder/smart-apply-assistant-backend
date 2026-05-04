@@ -37,8 +37,15 @@ public class ResumeService {
     public ResumeDto uploadResume(MultipartFile file) throws IOException {
         AppUser user = userService.getOrCreateDefaultUser();
         
-        // Simple text extraction for now
-        String textContent = new String(file.getBytes(), StandardCharsets.UTF_8);
+        String textContent;
+        if (file.getOriginalFilename() != null && file.getOriginalFilename().toLowerCase().endsWith(".pdf")) {
+            try (org.apache.pdfbox.pdmodel.PDDocument document = org.apache.pdfbox.loader.PDFParser.load(file.getBytes())) {
+                org.apache.pdfbox.text.PDFTextStripper stripper = new org.apache.pdfbox.text.PDFTextStripper();
+                textContent = stripper.getText(document);
+            }
+        } else {
+            textContent = new String(file.getBytes(), StandardCharsets.UTF_8);
+        }
 
         Resume resume = new Resume();
         resume.setUser(user);

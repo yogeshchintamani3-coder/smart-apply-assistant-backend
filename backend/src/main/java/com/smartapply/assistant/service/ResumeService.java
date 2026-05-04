@@ -39,7 +39,7 @@ public class ResumeService {
         
         String textContent;
         if (file.getOriginalFilename() != null && file.getOriginalFilename().toLowerCase().endsWith(".pdf")) {
-            try (org.apache.pdfbox.pdmodel.PDDocument document = org.apache.pdfbox.loader.PDFParser.load(file.getBytes())) {
+            try (org.apache.pdfbox.pdmodel.PDDocument document = org.apache.pdfbox.Loader.loadPDF(file.getBytes())) {
                 org.apache.pdfbox.text.PDFTextStripper stripper = new org.apache.pdfbox.text.PDFTextStripper();
                 textContent = stripper.getText(document);
             }

@@ -1,13 +1,11 @@
 services:
   - type: web
     name: smart-apply-assistant-backend
-    env: java
+    runtime: docker
     plan: free
-    buildCommand: "./mvnw clean package -DskipTests"
-    startCommand: "./smart-apply-assistant-backend"
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
     envVars:
-      - key: JAVA_VERSION
-        value: "17"
       - key: OPENAI_API_KEY
         sync: false
       - key: SPRING_PROFILES_ACTIVE

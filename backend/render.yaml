@@ -3,12 +3,13 @@ services:
     name: smart-apply-assistant-backend
     env: java
     plan: free
-    buildCommand: ./mvnw clean package -DskipTests
-    startCommand: java -jar target/assistant-0.0.1-SNAPSHOT.jar
+    buildCommand: "./mvnw clean package -DskipTests"
+    startCommand: "./smart-apply-assistant-backend"
     envVars:
+      - key: JAVA_VERSION
+        value: "17"
       - key: OPENAI_API_KEY
         sync: false
       - key: SPRING_PROFILES_ACTIVE
         value: prod
-        
 
